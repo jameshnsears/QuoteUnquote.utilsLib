@@ -61,14 +61,14 @@ public class PreferenceHelper {
     public static int countPreferences(
             @NonNull final String preferenceFilename,
             @NonNull final Context applicationContext,
-            final int prefix) {
-        Timber.d("%d", prefix);
+            final int widgetId) {
+        Timber.d("%d", widgetId);
 
         int preferenceCount = 0;
 
         final Map<String, ?> sharedPreferenceEntries = applicationContext.getSharedPreferences(preferenceFilename, Context.MODE_PRIVATE).getAll();
         for (final Map.Entry<String, ?> entry : sharedPreferenceEntries.entrySet()) {
-            if (entry.getKey().startsWith(String.format(Locale.ENGLISH, "%d:", prefix))) {
+            if (entry.getKey().startsWith(String.format(Locale.ENGLISH, "%d:", widgetId))) {
                 preferenceCount++;
             }
         }

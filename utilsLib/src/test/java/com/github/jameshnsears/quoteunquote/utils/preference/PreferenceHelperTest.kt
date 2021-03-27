@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Build
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import junit.framework.TestCase.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -14,9 +15,9 @@ import org.robolectric.annotation.Config
 @RunWith(AndroidJUnit4::class)
 @Config(sdk = [Build.VERSION_CODES.P])
 class PreferenceHelperTest {
-    val preferenceFilename = "preferenceFilename"
-    lateinit var preferenceHelper: PreferenceHelper
-    lateinit var applicationContext: Context
+    private val preferenceFilename = "preferenceFilename"
+    private lateinit var preferenceHelper: PreferenceHelper
+    private lateinit var applicationContext: Context
 
     @Before
     fun init() {
@@ -45,5 +46,7 @@ class PreferenceHelperTest {
 
         PreferenceHelper.empty(preferenceFilename, applicationContext)
         assertTrue(preferenceHelper.getPreferenceString("3:string") == "")
+
+        assertEquals(0, PreferenceHelper.countPreferences(preferenceFilename, applicationContext, 3))
     }
 }

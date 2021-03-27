@@ -1,9 +1,7 @@
 package com.github.jameshnsears.quoteunquote.utils.widget
 
-class WidgetIdHelper {
-    private constructor() {
-        // ...
-    }
+class WidgetIdHelper// ...
+private constructor() {
 
     companion object {
         const val WIDGET_ID_01 = -1
