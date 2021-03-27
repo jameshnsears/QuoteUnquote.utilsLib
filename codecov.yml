@@ -1,0 +1,10 @@
+flags:
+  utilslib.fdroid:
+    carryforward: false
+
+  utilslib.googleplay:
+    carryforward: false
+
+ignore:
+  - "**/test/**/*.kt"
+  - "**/test/**/*.java"
