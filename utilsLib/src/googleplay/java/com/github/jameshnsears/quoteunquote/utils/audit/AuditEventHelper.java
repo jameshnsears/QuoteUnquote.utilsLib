@@ -33,6 +33,8 @@ public final class AuditEventHelper {
     }
 
     public static synchronized void auditEvent(@NonNull final String auditEvent, @NonNull final ConcurrentMap<String, String> properties) {
+        // adb shell setprop debug.firebase.analytics.app com.github.jameshnsears.quoteunquote
+        // adb shell setprop debug.firebase.analytics.app .none.
         Bundle bundle = new Bundle();
         for (Map.Entry<String, String> entry : properties.entrySet()) {
             // https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics#logEvent(java.lang.String,%20android.os.Bundle)
