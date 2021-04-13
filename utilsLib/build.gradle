@@ -108,6 +108,10 @@ android {
 }
 
 dependencies {
+    googleplayImplementation platform('com.google.firebase:firebase-bom:27.0.0')
+    googleplayImplementation 'com.google.firebase:firebase-analytics'
+    googleplayImplementation 'com.google.firebase:firebase-appindexing'
+    googleplayImplementation 'com.google.firebase:firebase-perf'
     googleplayImplementation 'com.microsoft.appcenter:appcenter-analytics:4.1.1'
     googleplayImplementation 'com.microsoft.appcenter:appcenter-crashes:4.1.1'
 
