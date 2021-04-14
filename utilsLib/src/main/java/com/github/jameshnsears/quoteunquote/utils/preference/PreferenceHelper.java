@@ -14,7 +14,9 @@ import java.util.Map;
 import timber.log.Timber;
 
 public class PreferenceHelper {
+    @NonNull
     private final String preferenceFilename;
+    @NonNull
     private final Context context;
 
     public PreferenceHelper(@NonNull final String preferenceFilename,
