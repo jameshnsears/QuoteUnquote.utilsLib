@@ -15,6 +15,7 @@ class AuditEventHelperTest {
     fun `demonstrate invocation`() {
         AuditEventHelper.createInstance(getApplicationContext())
         val properties: ConcurrentHashMap<String, String> = ConcurrentHashMap()
+        properties["a"] = "b"
         AuditEventHelper.auditEvent("", properties)
     }
 }

@@ -5,6 +5,8 @@ plugins {
 
 apply from: '../jacoco.gradle'
 apply plugin: 'kotlin-android'
+apply from: '../ktlint.gradle'
+apply from: '../detekt.gradle'
 apply from: '../sonarcube.gradle'
 
 def localPropertiesFile = file(project(':utilsLib').projectDir.path + "/local.properties")

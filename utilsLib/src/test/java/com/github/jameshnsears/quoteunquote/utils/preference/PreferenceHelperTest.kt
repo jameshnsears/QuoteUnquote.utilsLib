@@ -39,7 +39,6 @@ class PreferenceHelperTest {
         preferenceHelper.setPreference("3:string", "abc")
         assertTrue(preferenceHelper.getPreferenceString("3:string") == "abc")
 
-
         PreferenceHelper.empty(preferenceFilename, applicationContext, 1)
         assertTrue(PreferenceHelper.countPreferences(preferenceFilename, applicationContext, 1) == 0)
         assertTrue(preferenceHelper.getPreferenceInt("1:int") == -1)

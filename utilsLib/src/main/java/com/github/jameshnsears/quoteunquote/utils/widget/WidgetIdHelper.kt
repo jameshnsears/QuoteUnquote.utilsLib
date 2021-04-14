@@ -1,6 +1,6 @@
 package com.github.jameshnsears.quoteunquote.utils.widget
 
-class WidgetIdHelper// ...
+class WidgetIdHelper // ...
 private constructor() {
 
     companion object {
