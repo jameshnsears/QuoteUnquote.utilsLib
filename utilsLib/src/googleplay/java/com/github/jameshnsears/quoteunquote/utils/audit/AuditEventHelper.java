@@ -52,7 +52,10 @@ public final class AuditEventHelper {
 
             bundle.putString(key, value);
         }
-        firebaseAnalytics.logEvent(auditEvent, bundle);
+
+        if (firebaseAnalytics != null) {
+            firebaseAnalytics.logEvent(auditEvent, bundle);
+        }
 
         Analytics.trackEvent(auditEvent, properties, Flags.NORMAL);
     }
