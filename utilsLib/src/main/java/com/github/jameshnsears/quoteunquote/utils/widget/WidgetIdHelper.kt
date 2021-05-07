@@ -4,7 +4,7 @@ class WidgetIdHelper // ...
 private constructor() {
 
     companion object {
-        const val WIDGET_ID_01 = -1
-        const val WIDGET_ID_02 = -2
+        const val WIDGET_ID_01: Int = -1
+        const val WIDGET_ID_02: Int = -2
     }
 }
