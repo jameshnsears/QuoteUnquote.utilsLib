@@ -22,7 +22,14 @@ if (!localPropertiesFile.exists()) {
 }
 
 android {
+    //    compileSdkVersion 30
+    compileSdkVersion "android-S"
+
     defaultConfig {
+        minSdkVersion 24
+//        targetSdkVersion 30
+        targetSdkVersion "S"
+
         versionCode 1
         versionName "1.0"
 
@@ -72,29 +79,13 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
-    flavorDimensions 'Version', 'SDK'
+    flavorDimensions 'Version'
     productFlavors {
         'googleplay' {
             dimension 'Version'
         }
         'fdroid' {
             dimension 'Version'
-        }
-        'sdkS' {
-            dimension "SDK"
-            buildToolsVersion '31.0.0 rc4'
-            compileSdkVersion "android-S"
-            minSdkVersion "S"
-            targetSdkVersion "S"
-            versionNameSuffix "-S"
-        }
-        'sdkR' {
-            dimension "SDK"
-            buildToolsVersion '30.0.3'
-            compileSdkVersion 30
-            minSdkVersion 24
-            targetSdkVersion 30
-            versionNameSuffix "-R"
         }
     }
 
