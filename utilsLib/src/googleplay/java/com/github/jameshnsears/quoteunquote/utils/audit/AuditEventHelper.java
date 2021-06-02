@@ -23,12 +23,12 @@ public final class AuditEventHelper {
 
     private AuditEventHelper(final Application application) {
         AppCenter.start(application, BuildConfig.APPCENTER_KEY, Analytics.class, Crashes.class);
-        firebaseAnalytics = FirebaseAnalytics.getInstance(application.getApplicationContext());
     }
 
     public static synchronized void createInstance(@NonNull final Application application) {
         if (auditEventHelperSingleton == null) {
             auditEventHelperSingleton = new AuditEventHelper(application);
+            firebaseAnalytics = FirebaseAnalytics.getInstance(application.getApplicationContext());
         }
     }
 
