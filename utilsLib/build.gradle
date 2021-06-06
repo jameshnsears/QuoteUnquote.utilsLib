@@ -22,7 +22,15 @@ if (!localPropertiesFile.exists()) {
 }
 
 android {
+    compileSdkVersion 30
+    // compileSdkVersion "android-S"
+
     defaultConfig {
+        minSdkVersion 24
+        targetSdkVersion 30
+        // minSdkVersion "S"
+        // targetSdkVersion "S"
+
         versionCode 1
         versionName "1.0"
 
@@ -76,27 +84,15 @@ android {
     productFlavors {
         'fdroid' {
             dimension 'Version'
-            compileSdkVersion 30
-            minSdkVersion 24
-            targetSdkVersion 30
         }
         'fdroidS' {
             dimension 'Version'
-            compileSdkVersion "android-S"
-            minSdkVersion "S"
-            targetSdkVersion "S"
         }
         'googleplay' {
             dimension 'Version'
-            compileSdkVersion 30
-            minSdkVersion 24
-            targetSdkVersion 30
         }
         'googleplayS' {
             dimension 'Version'
-            compileSdkVersion "android-S"
-            minSdkVersion "S"
-            targetSdkVersion "S"
         }
     }
 
@@ -133,18 +129,20 @@ dependencies {
     googleplayImplementation 'com.google.firebase:firebase-analytics'
     googleplayImplementation 'com.google.firebase:firebase-appindexing'
     googleplayImplementation 'com.google.firebase:firebase-perf'
-    googleplayImplementation 'com.microsoft.appcenter:appcenter-analytics:4.1.1'
-    googleplayImplementation 'com.microsoft.appcenter:appcenter-crashes:4.1.1'
+    googleplayImplementation 'com.microsoft.appcenter:appcenter-analytics:4.2.0'
+    googleplayImplementation 'com.microsoft.appcenter:appcenter-crashes:4.2.0'
 
     googleplaySImplementation platform('com.google.firebase:firebase-bom:27.0.0')
     googleplaySImplementation 'com.google.firebase:firebase-analytics'
     googleplaySImplementation 'com.google.firebase:firebase-appindexing'
     googleplaySImplementation 'com.google.firebase:firebase-perf'
-    googleplaySImplementation 'com.microsoft.appcenter:appcenter-analytics:4.1.1'
-    googleplaySImplementation 'com.microsoft.appcenter:appcenter-crashes:4.1.1'
+    googleplaySImplementation 'com.microsoft.appcenter:appcenter-analytics:4.2.0'
+    googleplaySImplementation 'com.microsoft.appcenter:appcenter-crashes:4.2.0'
 
     implementation 'androidx.annotation:annotation:1.2.0'
-    implementation 'androidx.core:core-ktx:1.6.0-beta01'
+    implementation 'androidx.core:core-ktx:1.5.0'
+    fdroidSImplementation 'androidx.core:core-ktx:1.6.0-beta02'
+    googleplaySImplementation 'androidx.core:core-ktx:1.6.0-beta02'
     implementation 'androidx.test.ext:junit:1.1.2'
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.10'
