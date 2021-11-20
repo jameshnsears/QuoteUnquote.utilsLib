@@ -2,9 +2,9 @@
 <lint>
     <issue id="InvalidPackage">
         <ignore path="**/bcprov-jdk15on-1.68.jar" />
-        <ignore path="**/resources-4.6.1.jar" />
-        <ignore path="**/shadows-framework-4.6.1.jar" />
-        <ignore path="**/utils-4.6.1.jar" />
+        <ignore path="**/resources-4.7.2.jar" />
+        <ignore path="**/shadows-framework-4.7.2.jar" />
+        <ignore path="**/utils-4.7.2.jar" />
     </issue>
     <issue id="OldTargetApi" severity="ignore" />
 </lint>
