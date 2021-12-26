@@ -21,7 +21,7 @@ public final class AuditEventHelper {
     private static AuditEventHelper auditEventHelperSingleton;
     private static FirebaseAnalytics firebaseAnalytics;
 
-    private AuditEventHelper(final Application application) {
+    private AuditEventHelper(@NonNull final Application application) {
         AppCenter.start(application, BuildConfig.APPCENTER_KEY, Analytics.class, Crashes.class);
     }
 
