@@ -15,6 +15,7 @@ task ktlint(type: JavaExec, group: "verification") {
     description 'ktlint'
 
     classpath = configurations.ktlint
+    main = "com.pinterest.ktlint.Main"
     args = ["--disabled_rules=import-ordering", "src/**/*.kt"]
 }
 check.dependsOn ktlint
@@ -24,5 +25,6 @@ task ktlintFormat(type: JavaExec, group: "formatting") {
     description 'ktlintFormat'
 
     classpath = configurations.ktlint
+    main = "com.pinterest.ktlint.Main"
     args "-F", "src/**/*.kt"
 }
