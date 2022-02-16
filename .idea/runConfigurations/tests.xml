@@ -10,8 +10,8 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value=":utilsLib:cleanTestEmanuelkebedeDebugUnitTest" />
-          <option value=":utilsLib:testEmanuelkebedeDebugUnitTest" />
+          <option value=":utilsLib:cleanTestFdroidDebugUnitTest" />
+          <option value=":utilsLib:testFdroidDebugUnitTest" />
         </list>
       </option>
       <option name="vmOptions" value="" />
