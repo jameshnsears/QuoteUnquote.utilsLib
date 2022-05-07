@@ -78,7 +78,7 @@ public class PreferenceHelper {
         return preferenceCount;
     }
 
-    protected @NonNull
+    public @NonNull
     SharedPreferences getPreferences() {
         return this.context.getSharedPreferences(this.preferenceFilename, Context.MODE_PRIVATE);
     }
