@@ -111,10 +111,11 @@ android {
         warningsAsErrors false
         xmlReport false
     }
+    namespace 'com.github.jameshnsears.quoteunquote.utils'
 }
 
 dependencies {
-    googleplayImplementation platform('com.google.firebase:firebase-bom:27.0.0')
+    googleplayImplementation platform('com.google.firebase:firebase-bom:30.0.0')
     googleplayImplementation 'com.google.firebase:firebase-analytics'
     googleplayImplementation 'com.google.firebase:firebase-appindexing'
     googleplayImplementation 'com.google.firebase:firebase-perf'
