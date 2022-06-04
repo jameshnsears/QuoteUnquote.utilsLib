@@ -115,7 +115,7 @@ android {
 }
 
 dependencies {
-    googleplayImplementation platform('com.google.firebase:firebase-bom:30.0.2')
+    googleplayImplementation platform('com.google.firebase:firebase-bom:30.1.0')
     googleplayImplementation 'com.google.firebase:firebase-analytics'
     googleplayImplementation 'com.google.firebase:firebase-appindexing'
     googleplayImplementation 'com.google.firebase:firebase-perf'
