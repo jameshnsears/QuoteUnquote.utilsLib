@@ -22,7 +22,7 @@ if (!localPropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 32
 
     defaultConfig {
         minSdkVersion 24
@@ -79,6 +79,9 @@ android {
         'emanuelkebede' {
             dimension 'Version'
         }
+        'activityTest' {
+            dimension 'Version'
+        }
     }
 
     sourceSets {
@@ -89,6 +92,9 @@ android {
             java.srcDirs = ['src/main/java', 'src/googleplay/java']
         }
         emanuelkebede {
+            java.srcDirs = ['src/main/java', 'src/fdroid/java']
+        }
+        activityTest {
             java.srcDirs = ['src/main/java', 'src/fdroid/java']
         }
     }
