@@ -9,7 +9,7 @@ import org.robolectric.annotation.Config
 import java.util.concurrent.ConcurrentHashMap
 
 @RunWith(AndroidJUnit4::class)
-@Config(sdk = [Build.VERSION_CODES.S])
+@Config(sdk = [Build.VERSION_CODES.TIRAMISU])
 class AuditEventHelperTest {
     @Test
     fun `demonstrate invocation`() {

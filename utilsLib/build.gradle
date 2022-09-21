@@ -58,12 +58,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = 11
     }
 
     flavorDimensions 'Version'
@@ -74,6 +74,12 @@ android {
         'googleplay' {
             dimension 'Version'
         }
+        'espresso' {
+            dimension 'Version'
+        }
+        'uiautomator' {
+            dimension 'Version'
+        }
     }
 
     sourceSets {
@@ -82,6 +88,12 @@ android {
         }
         googleplay {
             java.srcDirs = ['src/main/java', 'src/googleplay/java']
+        }
+        espresso {
+            java.srcDirs = ['src/main/java', 'src/fdroid/java']
+        }
+        uiautomator {
+            java.srcDirs = ['src/main/java', 'src/fdroid/java']
         }
     }
 
@@ -107,21 +119,21 @@ android {
 }
 
 dependencies {
-    googleplayImplementation platform('com.google.firebase:firebase-bom:30.4.1')
-    googleplayImplementation 'com.google.firebase:firebase-analytics:21.1.1'
+    googleplayImplementation platform('com.google.firebase:firebase-bom:31.0.2')
+    googleplayImplementation 'com.google.firebase:firebase-analytics:21.2.0'
     googleplayImplementation 'com.google.firebase:firebase-appindexing:20.0.0'
-    googleplayImplementation 'com.google.firebase:firebase-perf:20.1.1'
-    googleplayImplementation 'com.microsoft.appcenter:appcenter-analytics:4.4.5'
-    googleplayImplementation 'com.microsoft.appcenter:appcenter-crashes:4.4.5'
+    googleplayImplementation 'com.google.firebase:firebase-perf:20.2.0'
+    googleplayImplementation 'com.microsoft.appcenter:appcenter-analytics:5.0.0'
+    googleplayImplementation 'com.microsoft.appcenter:appcenter-crashes:5.0.0'
 
-    implementation 'androidx.annotation:annotation:1.4.0'
+    implementation 'androidx.annotation:annotation:1.5.0'
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'com.jakewharton.timber:timber:5.0.1'
 
-    testImplementation 'androidx.test.ext:junit:1.1.3'
-    testImplementation 'androidx.test:runner:1.4.0'
+    testImplementation 'androidx.test.ext:junit:1.1.4'
+    testImplementation 'androidx.test:runner:1.5.0'
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.robolectric:robolectric:4.8.2'
+    testImplementation 'org.robolectric:robolectric:4.9'
 }
 
 repositories {
