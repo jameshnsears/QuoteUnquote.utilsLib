@@ -9,8 +9,8 @@ public final class MethodLineLoggingTree extends DebugTree {
     protected @NonNull
     String createStackElementTag(@NonNull final StackTraceElement element) {
         return String.format(
-                "%s.%s, %s",
-                super.createStackElementTag(element),
+                "%s, %s",
+                //super.createStackElementTag(element),
                 element.getMethodName(),
                 element.getLineNumber());
     }
