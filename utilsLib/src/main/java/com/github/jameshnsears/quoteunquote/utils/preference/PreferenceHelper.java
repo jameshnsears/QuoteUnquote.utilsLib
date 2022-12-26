@@ -46,8 +46,6 @@ public class PreferenceHelper {
             @NonNull final String preferenceFilename,
             @NonNull final Context applicationContext,
             final int prefix) {
-        Timber.d("%d", prefix);
-
         final SharedPreferences.Editor editor = getEditor(preferenceFilename, applicationContext);
 
         final Map<String, ?> sharedPreferenceEntries = applicationContext.getSharedPreferences(preferenceFilename, Context.MODE_PRIVATE).getAll();
@@ -64,8 +62,6 @@ public class PreferenceHelper {
             @NonNull final String preferenceFilename,
             @NonNull final Context applicationContext,
             final int widgetId) {
-        Timber.d("%d", widgetId);
-
         int preferenceCount = 0;
 
         final Map<String, ?> sharedPreferenceEntries = applicationContext.getSharedPreferences(preferenceFilename, Context.MODE_PRIVATE).getAll();

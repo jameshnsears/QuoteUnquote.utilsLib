@@ -119,7 +119,7 @@ android {
 }
 
 dependencies {
-    googleplayImplementation platform('com.google.firebase:firebase-bom:31.1.0')
+    googleplayImplementation platform('com.google.firebase:firebase-bom:31.1.1')
     googleplayImplementation 'com.google.firebase:firebase-analytics:21.2.0'
     googleplayImplementation 'com.google.firebase:firebase-appindexing:20.0.0'
     googleplayImplementation 'com.google.firebase:firebase-perf:20.3.0'
@@ -133,7 +133,7 @@ dependencies {
     testImplementation 'androidx.test.ext:junit:1.1.4'
     testImplementation 'androidx.test:runner:1.5.1'
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.robolectric:robolectric:4.9'
+    testImplementation 'org.robolectric:robolectric:4.9.1'
 }
 
 repositories {
