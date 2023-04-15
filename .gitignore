@@ -20,3 +20,4 @@
 *.iml
 local.properties
 utilsLib/.classpath
+/bin/envvars.sh
