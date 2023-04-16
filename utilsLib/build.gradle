@@ -31,6 +31,10 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     buildTypes {
         def appcenterKeyProd = System.getenv("APPCENTER_KEY_PRODUCTION")
         if (appcenterKeyProd == null) {
