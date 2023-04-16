@@ -30,7 +30,7 @@ jobs:
           echo "$LOCAL_PROPERTIES" | base64 -d > utilsLib/local.properties
 
       - name: gradle cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/.gradle
