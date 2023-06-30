@@ -128,7 +128,7 @@ dependencies {
     googleplayImplementation 'com.google.firebase:firebase-appindexing:20.0.0'
     googleplayImplementation 'com.google.firebase:firebase-perf:20.3.2'
     googleplayImplementation 'com.microsoft.appcenter:appcenter-analytics:5.0.1'
-    googleplayImplementation 'com.microsoft.appcenter:appcenter-crashes:5.0.1'
+    googleplayImplementation 'com.microsoft.appcenter:appcenter-crashes:5.0.2'
 
     implementation 'androidx.annotation:annotation:1.6.0'
     implementation 'androidx.core:core-ktx:1.10.1'
