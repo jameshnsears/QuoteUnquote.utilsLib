@@ -27,7 +27,13 @@ class PreferenceHelperTest {
 
     @Test
     fun `confirm api works as expected`() {
-        assertTrue(PreferenceHelper.countPreferences(preferenceFilename, applicationContext, 1) == 0)
+        assertTrue(
+            PreferenceHelper.countPreferences(
+                preferenceFilename,
+                applicationContext,
+                1,
+            ) == 0,
+        )
 
         preferenceHelper.setPreference("1:int", 234)
         assertTrue(preferenceHelper.getPreferenceInt("1:int") == 234)
@@ -40,12 +46,21 @@ class PreferenceHelperTest {
         assertTrue(preferenceHelper.getPreferenceString("3:string") == "abc")
 
         PreferenceHelper.empty(preferenceFilename, applicationContext, 1)
-        assertTrue(PreferenceHelper.countPreferences(preferenceFilename, applicationContext, 1) == 0)
+        assertTrue(
+            PreferenceHelper.countPreferences(
+                preferenceFilename,
+                applicationContext,
+                1,
+            ) == 0,
+        )
         assertTrue(preferenceHelper.getPreferenceInt("1:int") == -1)
 
         PreferenceHelper.empty(preferenceFilename, applicationContext)
         assertTrue(preferenceHelper.getPreferenceString("3:string") == "")
 
-        assertEquals(0, PreferenceHelper.countPreferences(preferenceFilename, applicationContext, 3))
+        assertEquals(
+            0,
+            PreferenceHelper.countPreferences(preferenceFilename, applicationContext, 3),
+        )
     }
 }
