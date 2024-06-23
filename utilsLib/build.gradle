@@ -124,7 +124,7 @@ android {
 
 dependencies {
     googleplayImplementation 'com.microsoft.appcenter:appcenter-crashes:5.0.4'
-    googleplayImplementation 'com.google.firebase:firebase-crashlytics:19.0.1'
+    googleplayImplementation 'com.google.firebase:firebase-crashlytics:19.0.2'
 
     implementation 'androidx.annotation:annotation:1.8.0'
     implementation 'androidx.core:core-ktx:1.13.1'
