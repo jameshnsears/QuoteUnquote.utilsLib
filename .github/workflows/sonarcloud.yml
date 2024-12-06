@@ -23,7 +23,7 @@ jobs:
           LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
         run: echo "$LOCAL_PROPERTIES" | base64 -d > utilsLib/local.properties
 
-      - name: Set up JDK 11
+      - name: set up jdk
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
@@ -48,4 +48,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          ./gradlew :utilsLib:testFdroidDebugCoverage sonarqube --info
+          ./gradlew :utilsLib:testFdroidDebugCoverage sonar --info

@@ -6,10 +6,15 @@ on:
   pull_request:
     branches:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   coverage-utilsLib:
     name: coverage-utilsLib
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       - name: checkout
@@ -45,15 +50,12 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: utilsLib
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 29
-          target: default
-          script: ./gradlew :utilsLib:testFdroidDebugCoverage :utilsLib:testGoogleplayDebugCoverage
+        run: |
+          ./gradlew :utilsLib:testFdroidDebugCoverage :utilsLib:testGoogleplayDebugCoverage
+          find . -type f
 
       - name: publish
         run: |
           set -x
-          ls -al utilsLib/build/reports/*.xml
           bash <(curl https://codecov.io/bash) -t ${{ secrets.CODECOVIO_TOKEN }} -f utilsLib/build/reports/FdroidDebug.xml -F utilslib.fdroid
           bash <(curl https://codecov.io/bash) -t ${{ secrets.CODECOVIO_TOKEN }} -f utilsLib/build/reports/GoogleplayDebug.xml -F utilslib.googleplay

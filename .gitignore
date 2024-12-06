@@ -19,5 +19,6 @@
 /.idea/workspace.xml
 *.iml
 local.properties
+/utilsLib/.idea/
 utilsLib/.classpath
 /bin/envvars.sh

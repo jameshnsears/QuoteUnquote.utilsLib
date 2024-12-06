@@ -1,6 +1,6 @@
 apply plugin: 'org.sonarqube'
 
-sonarqube {
+sonar {
     properties {
         property "sonar.projectKey", "jameshnsears_QuoteUnquote.utilsLib"
         property "sonar.organization", "jameshnsears-github"
