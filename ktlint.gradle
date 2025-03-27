@@ -10,7 +10,7 @@ dependencies {
     ktlint 'com.pinterest:ktlint:0.50.0'
 }
 
-task ktlint(type: JavaExec, group: "verification") {
+tasks.register('ktlint', JavaExec) {
     group = "QuoteUnquote"
     description 'ktlint'
 
@@ -20,7 +20,7 @@ task ktlint(type: JavaExec, group: "verification") {
 }
 check.dependsOn ktlint
 
-task ktlintFormat(type: JavaExec, group: "formatting") {
+tasks.register('ktlintFormat', JavaExec) {
     group = "QuoteUnquote"
     description 'ktlintFormat'
 
