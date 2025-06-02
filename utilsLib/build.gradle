@@ -9,24 +9,24 @@ apply from: '../ktlint.gradle'
 apply from: '../detekt.gradle'
 apply from: '../sonarqube.gradle'
 
-def localPropertiesFile = file(project(':utilsLib').projectDir.path + "/local.properties")
-def localProperties = new Properties()
+final def localPropertiesFile = file(project(':utilsLib').projectDir.path + "/local.properties")
+final def localProperties = new Properties()
 
 if (!localPropertiesFile.exists()) {
     localProperties.setProperty("APPCENTER_KEY_PRODUCTION", "")
     localProperties.setProperty("APPCENTER_KEY_DEVELOPMENT", "")
 
-    Writer writer = new FileWriter(localPropertiesFile, false)
+    final Writer writer = new FileWriter(localPropertiesFile, false)
     localProperties.store(writer, "empty, as creating the file is done manually via gpg")
     writer.close()
 }
 
 android {
-    compileSdk 35
+    compileSdk 36
 
     defaultConfig {
         minSdkVersion 24
-        targetSdkVersion 35
+        targetSdkVersion 36
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -38,14 +38,14 @@ android {
     buildTypes {
         def appcenterKeyProd = System.getenv("APPCENTER_KEY_PRODUCTION")
         if (appcenterKeyProd == null) {
-            Properties properties = new Properties()
+            final Properties properties = new Properties()
             properties.load(project.file('local.properties').newDataInputStream())
             appcenterKeyProd = properties.getProperty('APPCENTER_KEY_PRODUCTION')
         }
 
         def appcenterKeyDev = System.getenv("APPCENTER_KEY_DEVELOPMENT")
         if (appcenterKeyDev == null) {
-            Properties properties = new Properties()
+            final Properties properties = new Properties()
             properties.load(project.file('local.properties').newDataInputStream())
             appcenterKeyDev = properties.getProperty('APPCENTER_KEY_DEVELOPMENT')
         }
