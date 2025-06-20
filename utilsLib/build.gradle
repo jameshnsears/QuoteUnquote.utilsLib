@@ -3,10 +3,10 @@ plugins {
     id 'kotlin-android'
 }
 
-apply from: '../jacoco.gradle'
 apply plugin: 'kotlin-android'
-apply from: '../ktlint.gradle'
 apply from: '../detekt.gradle'
+apply from: '../jacoco.gradle'
+apply from: '../ktlint.gradle'
 apply from: '../sonarqube.gradle'
 
 def localPropertiesFile = file(project(':utilsLib').projectDir.path + "/local.properties")
@@ -22,11 +22,11 @@ if (!localPropertiesFile.exists()) {
 }
 
 android {
-    compileSdk 35
+    compileSdk 36
 
     defaultConfig {
         minSdkVersion 24
-        targetSdkVersion 35
+        targetSdkVersion 36
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -36,28 +36,29 @@ android {
     }
 
     buildTypes {
-        def appcenterKeyProd = System.getenv("APPCENTER_KEY_PRODUCTION")
-        if (appcenterKeyProd == null) {
+        def appCenterKeyProd = System.getenv("APPCENTER_KEY_PRODUCTION")
+        if (appCenterKeyProd == null) {
             Properties properties = new Properties()
             properties.load(project.file('local.properties').newDataInputStream())
-            appcenterKeyProd = properties.getProperty('APPCENTER_KEY_PRODUCTION')
+            appCenterKeyProd = properties.getProperty('APPCENTER_KEY_PRODUCTION')
         }
 
-        def appcenterKeyDev = System.getenv("APPCENTER_KEY_DEVELOPMENT")
-        if (appcenterKeyDev == null) {
+        def appCenterKeyDev = System.getenv("APPCENTER_KEY_DEVELOPMENT")
+        if (appCenterKeyDev == null) {
             Properties properties = new Properties()
             properties.load(project.file('local.properties').newDataInputStream())
-            appcenterKeyDev = properties.getProperty('APPCENTER_KEY_DEVELOPMENT')
+            appCenterKeyDev = properties.getProperty('APPCENTER_KEY_DEVELOPMENT')
         }
 
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-            buildConfigField("String", "APPCENTER_KEY", "\"$appcenterKeyProd\"")
+            buildConfigField("String", "APPCENTER_KEY", "\"$appCenterKeyProd\"")
         }
+
         debug {
-            buildConfigField("String", "APPCENTER_KEY", "\"$appcenterKeyDev\"")
+            buildConfigField("String", "APPCENTER_KEY", "\"$appCenterKeyDev\"")
         }
     }
 
@@ -112,6 +113,7 @@ android {
             }
         }
     }
+
     lint {
         abortOnError true
         checkAllWarnings true
@@ -119,12 +121,13 @@ android {
         warningsAsErrors false
         xmlReport false
     }
+
     namespace 'com.github.jameshnsears.quoteunquote.utils'
 }
 
 dependencies {
     googleplayImplementation 'com.microsoft.appcenter:appcenter-crashes:5.0.6'
-    googleplayImplementation 'com.google.firebase:firebase-crashlytics:19.4.3'
+    googleplayImplementation 'com.google.firebase:firebase-crashlytics:19.4.4'
 
     implementation 'androidx.annotation:annotation:1.9.1'
     implementation 'androidx.core:core-ktx:1.16.0'
