@@ -9,14 +9,14 @@ apply from: '../jacoco.gradle'
 apply from: '../ktlint.gradle'
 apply from: '../sonarqube.gradle'
 
-def localPropertiesFile = file(project(':utilsLib').projectDir.path + "/local.properties")
-def localProperties = new Properties()
+final def localPropertiesFile = file(project(':utilsLib').projectDir.path + "/local.properties")
+final def localProperties = new Properties()
 
 if (!localPropertiesFile.exists()) {
     localProperties.setProperty("APPCENTER_KEY_PRODUCTION", "")
     localProperties.setProperty("APPCENTER_KEY_DEVELOPMENT", "")
 
-    Writer writer = new FileWriter(localPropertiesFile, false)
+    final Writer writer = new FileWriter(localPropertiesFile, false)
     localProperties.store(writer, "empty, as creating the file is done manually via gpg")
     writer.close()
 }
@@ -38,14 +38,14 @@ android {
     buildTypes {
         def appCenterKeyProd = System.getenv("APPCENTER_KEY_PRODUCTION")
         if (appCenterKeyProd == null) {
-            Properties properties = new Properties()
+            final Properties properties = new Properties()
             properties.load(project.file('local.properties').newDataInputStream())
             appCenterKeyProd = properties.getProperty('APPCENTER_KEY_PRODUCTION')
         }
 
         def appCenterKeyDev = System.getenv("APPCENTER_KEY_DEVELOPMENT")
         if (appCenterKeyDev == null) {
-            Properties properties = new Properties()
+            final Properties properties = new Properties()
             properties.load(project.file('local.properties').newDataInputStream())
             appCenterKeyDev = properties.getProperty('APPCENTER_KEY_DEVELOPMENT')
         }
