@@ -4,84 +4,99 @@ jacoco {
     toolVersion = "0.8.14"
 }
 
+private static String capitalize(String s) {
+    s ? s[0].toUpperCase() + s[1..-1] : ''
+}
+
 project.afterEvaluate {
-    // Collect variants properly
-    def buildTypes = android.buildTypes.collect { it.name }
-    def productFlavors = android.productFlavors.collect { it.name }
-    if (!productFlavors) productFlavors.add('')
+    def buildTypes      = android.buildTypes.collect { it.name }
+    def productFlavors  = android.productFlavors.collect { it.name }
+    def buildDir        = layout.buildDirectory.get().asFile
 
-    productFlavors.each { productFlavorName ->
-        buildTypes.each { buildTypeName ->
+    // Ensure we always iterate at least once for projects without flavors
+    if (!productFlavors) productFlavors << ''
 
-            def sourceName = productFlavorName ? "${productFlavorName}${buildTypeName.capitalize()}" : buildTypeName
-            def capitalizedSourceName = sourceName.capitalize()
+    // Patterns excluded from coverage (generated, test, and data-binding classes)
+    def defaultExcludes = [
+            '**/R.class',
+            '**/R$*.class',
+            '**/BuildConfig.*',
+            '**/Manifest*.*',
+            '**/*_Impl*.*',
+            '**/*Binding.*',
+            '**/*Double.*',
+            '**/*Test.*',
+            '**/*Test$*.class',
+            '**/databinding/**',
+            '**/di/**',           // adjust or remove if you want DI classes covered
+    ]
 
-            // Define common exclusions in one place
-            def fileExclusions = [
-                    '**/BuildConfig.*',
-                    '**/*_Impl*.*',
-                    '**/*Binding.*',
-                    '**/*Double.*',
-                    '**/com/github/jameshnsears/quoteunquote/utils/logging/ShadowLoggingHelper.kt',
-                    '**/test/**',
-                    '**/androidTest/**',
-                    '**/*Test*.*',
-                    '**/R.class',
-                    '**/R$*.class'
+    productFlavors.each { flavor ->
+        buildTypes.each { buildType ->
+
+            // e.g. "debug", "stagingRelease"
+            def variantName  = flavor ? "${flavor}${capitalize(buildType)}" : buildType
+            def testTaskName = "test${capitalize(variantName)}UnitTest"
+
+            // ── Class directories ──────────────────────────────────────────
+            def kotlinClasses = fileTree(
+                    dir:      "${buildDir}/tmp/kotlin-classes/${variantName}",
+                    excludes: defaultExcludes
+            )
+            def javaClasses = fileTree(
+                    dir:      "${buildDir}/intermediates/javac/${variantName}/classes",
+                    excludes: defaultExcludes
+            )
+
+            // ── Source directories ─────────────────────────────────────────
+            def sourceDirs = [
+                    "${projectDir}/src/main/kotlin",
+                    "${projectDir}/src/main/java",
             ]
+            if (flavor) sourceDirs << "${projectDir}/src/${flavor}/java"
 
-            // Centralized configuration for Jacoco tasks
-            def setupJacocoTask = { JacocoReport task, String type ->
-                task.group = "quoteunquote"
-                task.description = "Generate Jacoco $type coverage reports for $capitalizedSourceName"
+            // ── Execution data ─────────────────────────────────────────────
+            def execFiles = fileTree(dir: buildDir, includes: [
+                    "jacoco/${testTaskName}.exec",
+                    // Uncomment if you also run instrumented tests:
+                    // "outputs/unit_test_code_coverage/${variantName}UnitTest/${testTaskName}.ec",
+            ])
 
-                def buildDir = layout.buildDirectory.get().asFile
+            // ── Report locations ───────────────────────────────────────────
+            def reportsDir    = "${buildDir}/reports/jacoco/${variantName}"
+            def xmlOutputFile = file("${reportsDir}/${variantName}.xml")
+            def htmlOutputDir = file("${reportsDir}/html")
 
-                // Modern AGP class locations
-                def classKotlin = fileTree(dir: "$buildDir/tmp/kotlin-classes/$sourceName", excludes: fileExclusions)
-                def classJava = fileTree(dir: "$buildDir/intermediates/javac/$sourceName/classes", excludes: fileExclusions)
+            // ── Task registration (preferred over legacy `task` syntax) ────
+            tasks.register("test${capitalize(variantName)}Coverage", JacocoReport) {
+                group       = "quoteunquote"
+                description = "Generate JaCoCo coverage report for the '${variantName}' variant."
 
-                task.classDirectories.setFrom(files([classKotlin, classJava]))
-                task.sourceDirectories.setFrom(files([
-                        "$project.projectDir/src/main/java",
-                        "$project.projectDir/src/main/kotlin",
-                        "$project.projectDir/src/$productFlavorName/java"
-                ]))
+                dependsOn testTaskName
 
-                task.reports {
-                    xml.required = true
-                    html.required = true
-                    xml.outputLocation.set(file("$buildDir/reports/jacoco/${sourceName}_${type}.xml"))
-                    html.outputLocation.set(file("$buildDir/reports/jacoco/${sourceName}_${type}"))
+                classDirectories.setFrom(files(kotlinClasses, javaClasses))
+                sourceDirectories.setFrom(files(sourceDirs))
+                executionData.setFrom(execFiles)
+
+                reports {
+                    xml.required         = true
+                    xml.outputLocation   = xmlOutputFile
+
+                    html.required        = true
+                    html.outputLocation  = htmlOutputDir
+
+                    csv.required         = false   // flip to true if needed
                 }
-            }
 
-            // 1. Unit Test Task
-            tasks.register("test${capitalizedSourceName}UnitTestCoverage", JacocoReport) {
-                dependsOn "test${capitalizedSourceName}UnitTest"
-                setupJacocoTask(it, "unit")
-                executionData.from = fileTree(dir: layout.buildDirectory, includes: [
-                        "outputs/unit_test_code_coverage/${sourceName}UnitTest/*.exec"
-                ])
-            }
-
-            // 2. Connected Android Test Task
-            tasks.register("connected${capitalizedSourceName}AndroidTestCoverage", JacocoReport) {
-                dependsOn "connected${capitalizedSourceName}AndroidTest"
-                setupJacocoTask(it, "connected")
-                executionData.from = fileTree(dir: layout.buildDirectory, includes: [
-                        "outputs/code_coverage/${sourceName}AndroidTest/**/*.ec"
-                ])
-            }
-
-            // 3. Combined Task
-            tasks.register("test${capitalizedSourceName}CombinedCoverage", JacocoReport) {
-                dependsOn "test${capitalizedSourceName}UnitTestCoverage", "connected${capitalizedSourceName}AndroidTestCoverage"
-                setupJacocoTask(it, "combined")
-                executionData.from = fileTree(dir: layout.buildDirectory, includes: [
-                        "outputs/unit_test_code_coverage/${sourceName}UnitTest/*.exec",
-                        "outputs/code_coverage/${sourceName}AndroidTest/**/*.ec"
-                ])
+                // Fail the task if no execution data is present so CI catches missing test runs
+                doFirst {
+                    if (executionData.files.every { !it.exists() }) {
+                        throw new GradleException(
+                                "No JaCoCo execution data found for '${variantName}'. " +
+                                        "Run '${testTaskName}' before generating the coverage report."
+                        )
+                    }
+                }
             }
         }
     }
