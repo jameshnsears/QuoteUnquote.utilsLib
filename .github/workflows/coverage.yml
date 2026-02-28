@@ -53,9 +53,3 @@ jobs:
         run: |
           ./gradlew :utilsLib:testFdroidDebugCoverage :utilsLib:testGoogleplayDebugCoverage
           find . -type f
-
-      - name: publish
-        run: |
-          set -x
-          bash <(curl https://codecov.io/bash) -t ${{ secrets.CODECOVIO_TOKEN }} -f utilsLib/build/reports/FdroidDebug.xml -F utilslib.fdroid
-          bash <(curl https://codecov.io/bash) -t ${{ secrets.CODECOVIO_TOKEN }} -f utilsLib/build/reports/GoogleplayDebug.xml -F utilslib.googleplay
