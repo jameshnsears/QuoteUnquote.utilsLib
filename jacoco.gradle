@@ -9,9 +9,9 @@ private static String capitalize(String s) {
 }
 
 project.afterEvaluate {
-    def buildTypes      = android.buildTypes.collect { it.name }
-    def productFlavors  = android.productFlavors.collect { it.name }
-    def buildDir        = layout.buildDirectory.get().asFile
+    def buildTypes = android.buildTypes.collect { it.name }
+    def productFlavors = android.productFlavors.collect { it.name }
+    def buildDir = layout.buildDirectory.get().asFile
 
     // Ensure we always iterate at least once for projects without flavors
     if (!productFlavors) productFlavors << ''
@@ -35,16 +35,16 @@ project.afterEvaluate {
         buildTypes.each { buildType ->
 
             // e.g. "debug", "stagingRelease"
-            def variantName  = flavor ? "${flavor}${capitalize(buildType)}" : buildType
+            def variantName = flavor ? "${flavor}${capitalize(buildType)}" : buildType
             def testTaskName = "test${capitalize(variantName)}UnitTest"
 
             // ── Class directories ──────────────────────────────────────────
             def kotlinClasses = fileTree(
-                    dir:      "${buildDir}/tmp/kotlin-classes/${variantName}",
+                    dir: "${buildDir}/tmp/kotlin-classes/${variantName}",
                     excludes: defaultExcludes
             )
             def javaClasses = fileTree(
-                    dir:      "${buildDir}/intermediates/javac/${variantName}/classes",
+                    dir: "${buildDir}/intermediates/javac/${variantName}/classes",
                     excludes: defaultExcludes
             )
 
@@ -63,13 +63,13 @@ project.afterEvaluate {
             ])
 
             // ── Report locations ───────────────────────────────────────────
-            def reportsDir    = "${buildDir}/reports/jacoco/${variantName}"
+            def reportsDir = "${buildDir}/reports/jacoco/${variantName}"
             def xmlOutputFile = file("${reportsDir}/${variantName}.xml")
             def htmlOutputDir = file("${reportsDir}/html")
 
             // ── Task registration (preferred over legacy `task` syntax) ────
             tasks.register("test${capitalize(variantName)}Coverage", JacocoReport) {
-                group       = "quoteunquote"
+                group = "quoteunquote"
                 description = "Generate JaCoCo coverage report for the '${variantName}' variant."
 
                 dependsOn testTaskName
@@ -79,13 +79,13 @@ project.afterEvaluate {
                 executionData.setFrom(execFiles)
 
                 reports {
-                    xml.required         = true
-                    xml.outputLocation   = xmlOutputFile
+                    xml.required = true
+                    xml.outputLocation = xmlOutputFile
 
-                    html.required        = true
-                    html.outputLocation  = htmlOutputDir
+                    html.required = true
+                    html.outputLocation = htmlOutputDir
 
-                    csv.required         = false   // flip to true if needed
+                    csv.required = false   // flip to true if needed
                 }
 
                 // Fail the task if no execution data is present so CI catches missing test runs
