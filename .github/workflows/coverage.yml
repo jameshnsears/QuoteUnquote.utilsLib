@@ -3,41 +3,43 @@ name: coverage
 on:
   push:
     branches:
-  pull_request:
-    branches:
+      - "*"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.configureondemand=true"
+
 jobs:
   coverage-utilsLib:
     name: coverage-utilsLib
     runs-on: ubuntu-latest
-    timeout-minutes: 30
 
     steps:
       - name: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
 
-      - name: set up jdk
-        uses: actions/setup-java@v5
-        with:
-          distribution: 'temurin'
-          java-version: 17
+      - name: Restore cache gradle
+        uses: ./.github/actions/cache-gradle
 
       - name: local.properties
         env:
           LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
         run: echo "$LOCAL_PROPERTIES" | base64 -d > utilsLib/local.properties
 
-      - name: setup gradle
-        uses: gradle/actions/setup-gradle@v6
-
       - name: utilsLib
         run: |
-          ./gradlew :utilsLib:testFdroidDebugCoverage :utilsLib:testGoogleplayDebugCoverage \
-            --build-cache \
-            -Dorg.gradle.jvmargs="-Xmx4g -XX:+UseG1GC"
+          ./gradlew :utilsLib:testFdroidDebugCoverage --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
+
+      - name: codecov
+        uses: codecov/codecov-action@v5
+        with:
+          fail_ci_if_error: true
+          files: ./utilsLib/build/reports/jacoco/fdroidDebug/fdroidDebug.xml
+          verbose: true
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOVIO_TOKEN }}
