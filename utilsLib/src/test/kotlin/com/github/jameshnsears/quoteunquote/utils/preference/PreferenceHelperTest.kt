@@ -4,9 +4,9 @@ import android.content.Context
 import android.os.Build
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import junit.framework.TestCase.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -27,40 +27,42 @@ class PreferenceHelperTest {
 
     @Test
     fun `confirm api works as expected`() {
-        assertTrue(
+        assertThat(
             PreferenceHelper.countPreferences(
                 preferenceFilename,
                 applicationContext,
                 1,
-            ) == 0,
+            ),
+            equalTo(0),
         )
 
         preferenceHelper.setPreference("1:int", 234)
-        assertTrue(preferenceHelper.getPreferenceInt("1:int") == 234)
+        assertThat(preferenceHelper.getPreferenceInt("1:int"), equalTo(234))
 
         preferenceHelper.setPreference("2:boolean", true)
-        assertTrue(preferenceHelper.getPreferenceBoolean("2:boolean", true))
-        assertFalse(preferenceHelper.getPreferenceBoolean("boolean-default", false))
+        assertThat(preferenceHelper.getPreferenceBoolean("2:boolean", true), `is`(true))
+        assertThat(preferenceHelper.getPreferenceBoolean("boolean-default", false), `is`(false))
 
         preferenceHelper.setPreference("3:string", "abc")
-        assertTrue(preferenceHelper.getPreferenceString("3:string") == "abc")
+        assertThat(preferenceHelper.getPreferenceString("3:string"), equalTo("abc"))
 
         PreferenceHelper.empty(preferenceFilename, applicationContext, 1)
-        assertTrue(
+        assertThat(
             PreferenceHelper.countPreferences(
                 preferenceFilename,
                 applicationContext,
                 1,
-            ) == 0,
+            ),
+            equalTo(0),
         )
-        assertTrue(preferenceHelper.getPreferenceInt("1:int") == -1)
+        assertThat(preferenceHelper.getPreferenceInt("1:int"), equalTo(-1))
 
         PreferenceHelper.empty(preferenceFilename, applicationContext)
-        assertTrue(preferenceHelper.getPreferenceString("3:string") == "")
+        assertThat(preferenceHelper.getPreferenceString("3:string"), equalTo(""))
 
-        assertEquals(
-            0,
+        assertThat(
             PreferenceHelper.countPreferences(preferenceFilename, applicationContext, 3),
+            equalTo(0),
         )
     }
 }
