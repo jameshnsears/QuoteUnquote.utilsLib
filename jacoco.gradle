@@ -1,7 +1,7 @@
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion = "0.8.14"
+    toolVersion = "0.8.15"
 }
 
 private static String capitalize(String s) {
@@ -39,14 +39,18 @@ project.afterEvaluate {
             def testTaskName = "test${capitalize(variantName)}UnitTest"
 
             // ── Class directories ──────────────────────────────────────────
-            def kotlinClasses = fileTree(
-                    dir: "${buildDir}/tmp/kotlin-classes/${variantName}",
-                    excludes: defaultExcludes
-            )
-            def javaClasses = fileTree(
-                    dir: "${buildDir}/intermediates/javac/${variantName}/classes",
-                    excludes: defaultExcludes
-            )
+            def classDirs = [
+                    "${buildDir}/tmp/kotlin-classes/${variantName}",
+                    "${buildDir}/intermediates/javac/${variantName}/classes",
+                    "${buildDir}/intermediates/built_in_kotlinc/${variantName}/compile${capitalize(variantName)}Kotlin/classes",
+                    "${buildDir}/intermediates/javac/${variantName}/compile${capitalize(variantName)}JavaWithJavac/classes",
+                    "${buildDir}/intermediates/runtime_library_classes_jar/${variantName}/bundleLibRuntimeToJar${capitalize(variantName)}/classes.jar",
+                    "${buildDir}/intermediates/compile_library_classes_jar/${variantName}/bundleLibCompileToJar${capitalize(variantName)}/classes.jar"
+            ]
+
+            def classes = files(classDirs.collect { dir ->
+                fileTree(dir: dir, excludes: defaultExcludes)
+            })
 
             // ── Source directories ─────────────────────────────────────────
             def sourceDirs = [
@@ -58,8 +62,7 @@ project.afterEvaluate {
             // ── Execution data ─────────────────────────────────────────────
             def execFiles = fileTree(dir: buildDir, includes: [
                     "jacoco/${testTaskName}.exec",
-                    // Uncomment if you also run instrumented tests:
-                    // "outputs/unit_test_code_coverage/${variantName}UnitTest/${testTaskName}.ec",
+                    "outputs/unit_test_code_coverage/${variantName}UnitTest/${testTaskName}.exec",
             ])
 
             // ── Report locations ───────────────────────────────────────────
@@ -74,7 +77,7 @@ project.afterEvaluate {
 
                 dependsOn testTaskName
 
-                classDirectories.setFrom(files(kotlinClasses, javaClasses))
+                classDirectories.setFrom(classes)
                 sourceDirectories.setFrom(files(sourceDirs))
                 executionData.setFrom(execFiles)
 
