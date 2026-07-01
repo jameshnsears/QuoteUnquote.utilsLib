@@ -177,10 +177,36 @@ android {
     }
 
     sourceSets {
-        getByName("fdroid") { java.directories.add("src/fdroid/java") }
-        getByName("googleplay") { java.directories.add("src/googleplay/java") }
-        getByName("espresso") { java.directories.add("src/fdroid/java") }
-        getByName("uiautomator") { java.directories.add("src/fdroid/java") }
+        getByName("main") {
+            java.directories.add("src/main/java")
+            java.directories.add("src/main/kotlin")
+            kotlin.directories.add("src/main/java")
+            kotlin.directories.add("src/main/kotlin")
+        }
+        getByName("fdroid") {
+            java.directories.add("src/fdroid/java")
+            java.directories.add("src/fdroid/kotlin")
+            kotlin.directories.add("src/fdroid/java")
+            kotlin.directories.add("src/fdroid/kotlin")
+        }
+        getByName("googleplay") {
+            java.directories.add("src/googleplay/java")
+            java.directories.add("src/googleplay/kotlin")
+            kotlin.directories.add("src/googleplay/java")
+            kotlin.directories.add("src/googleplay/kotlin")
+        }
+        getByName("espresso") {
+            java.directories.add("src/fdroid/java")
+            java.directories.add("src/fdroid/kotlin")
+            kotlin.directories.add("src/fdroid/java")
+            kotlin.directories.add("src/fdroid/kotlin")
+        }
+        getByName("uiautomator") {
+            java.directories.add("src/fdroid/java")
+            java.directories.add("src/fdroid/kotlin")
+            kotlin.directories.add("src/fdroid/java")
+            kotlin.directories.add("src/fdroid/kotlin")
+        }
     }
 
     testOptions {
