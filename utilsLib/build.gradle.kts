@@ -25,7 +25,7 @@ detekt {
 // --- Ktlint ---
 val ktlintConfiguration = configurations.create("ktlint")
 dependencies {
-    ktlintConfiguration("com.pinterest:ktlint:0.50.0") {
+    ktlintConfiguration("com.pinterest:ktlint:0.51.0-FINAL") {
         attributes {
             attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
         }
