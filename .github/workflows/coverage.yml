@@ -36,7 +36,7 @@ jobs:
           ./gradlew :utilsLib:testFdroidDebugCoverage --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
 
       - name: codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           fail_ci_if_error: true
           files: ./utilsLib/build/reports/jacoco/fdroidDebug/fdroidDebug.xml
