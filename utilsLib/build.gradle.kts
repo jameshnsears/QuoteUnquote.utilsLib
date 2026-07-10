@@ -248,7 +248,7 @@ android {
 }
 
 dependencies {
-    "googleplayImplementation"("com.google.firebase:firebase-crashlytics:20.0.6")
+    "googleplayImplementation"("com.google.firebase:firebase-crashlytics:20.1.0")
     implementation("androidx.annotation:annotation:1.10.0")
     implementation("androidx.core:core-ktx:1.13.1") //   # stable, for Liar API: Fatal Exception: java.lang.NoSuchMethodError: No virtual method getRoundedCorner(I)Landroid/view/RoundedCorner; in class Landroid/view/Display
     implementation("com.jakewharton.timber:timber:5.0.1")
