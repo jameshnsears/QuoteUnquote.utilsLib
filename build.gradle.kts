@@ -11,7 +11,7 @@ buildscript {
         classpath("com.android.tools.build:gradle:9.2.1")
         classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.8")
         classpath("org.jacoco:org.jacoco.core:0.8.15")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.4.0")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.4.10")
         classpath("com.diffplug.spotless:spotless-plugin-gradle:8.8.0")
     }
 }
